@@ -3,6 +3,9 @@ const searchBtn = document.getElementById('search-btn');
 
 searchBtn.addEventListener('click', getWeather);
 
+const loadingSpinner = document.querySelector('.loading-spinner');
+const weatherInfo = document.querySelector('.weather-info');
+
 async function getCoordinates(city) {
     try {
         const response = await fetch(
@@ -28,6 +31,9 @@ async function getWeather() {
     const city = cityInput.value;
     if (!city) return;
 
+    loadingSpinner.classList.remove('hidden');
+    weatherInfo.classList.add('hidden');
+
     try {
         const coords = await getCoordinates(city);
         
@@ -52,6 +58,9 @@ async function getWeather() {
     } catch (error) {
         console.error('Error:', error);
         alert('City not found. Please try again.');
+    } finally {
+        loadingSpinner.classList.add('hidden');
+        weatherInfo.classList.remove('hidden');
     }
 }
 
