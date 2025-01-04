@@ -33,12 +33,19 @@ async function getWeather() {
         
         // Then get the weather data
         const response = await fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
+            `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=sunrise,sunset&timezone=auto`
         );
         const data = await response.json();
 
         if (response.ok) {
-            displayWeather(data, coords.name);
+            const currentTime = new Date().toLocaleString("en-US", {
+                timeZone: data.timezone
+            });
+            const currentDateTime = new Date(currentTime);
+            const sunrise = new Date(data.daily.sunrise[0]);
+            const sunset = new Date(data.daily.sunset[0]);
+            const isDay = currentDateTime >= sunrise && currentDateTime < sunset;
+            displayWeather(data, coords.name, isDay);
         } else {
             alert('Error getting weather data. Please try again.');
         }
@@ -48,12 +55,11 @@ async function getWeather() {
     }
 }
 
-function getWeatherAnimation(code) {
-    // Weather codes from Open-Meteo API
+function getWeatherAnimation(code, isDay) {
     const weatherAnimations = {
-        0: 'sunny', // Clear sky
-        1: 'partly-cloudy', // Mainly clear
-        2: 'partly-cloudy', // Partly cloudy
+        0: isDay ? 'clear-day' : 'clear-night', // Clear sky
+        1: isDay ? 'partly-cloudy-day' : 'partly-cloudy-night', // Mainly clear
+        2: isDay ? 'partly-cloudy-day' : 'partly-cloudy-night', // Partly cloudy
         3: 'cloudy', // Overcast
         45: 'foggy', // Foggy
         48: 'foggy', // Depositing rime fog
@@ -109,7 +115,8 @@ function getWeatherDescription(code) {
     return descriptions[code] || 'Unknown';
 }
 
-function displayWeather(data, cityName) {
+function displayWeather(data, cityName, isDay) {
+    // console.log(data);
     document.getElementById('city').textContent = `Weather in ${cityName}`;
     document.getElementById('temperature').textContent = 
         `${Math.round(data.current.temperature_2m)}°C`;
@@ -119,4 +126,13 @@ function displayWeather(data, cityName) {
         `${Math.round(data.current.relative_humidity_2m)}%`;
     document.getElementById('wind').textContent = 
         `${Math.round(data.current.wind_speed_10m)} km/h`;
+
+    const container = document.querySelector('.container');
+    const weatherAnimation = getWeatherAnimation(data.current.weather_code, isDay);
+    
+    container.classList.remove('clear-day', 'clear-night', 'partly-cloudy-day', 
+        'partly-cloudy-night', 'cloudy', 'rainy', 'heavy-rain', 'snowy', 
+        'heavy-snow', 'foggy', 'thunderstorm', 'unknown');
+   
+    container.classList.add(weatherAnimation);
 } 

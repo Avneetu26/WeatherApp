@@ -6,12 +6,23 @@
 }
 
 body {
-    background-image: url('imgs/weather_clouds.jpg');
-    background-size: cover;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('imgs/weather_clouds.jpg');
+    background-size: cover;
+    opacity: 0.5; 
+    z-index: -1;
 }
 
 .container {
@@ -22,6 +33,7 @@ body {
     width: 100%;
     max-width: 400px;
     margin: 1rem;
+    transition: all 0.3s ease;
 }
 
 .search-box {
@@ -80,4 +92,119 @@ button:hover {
 
 .col {
     text-align: center;
+}
+
+.clear-day {
+    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    animation: gradient-shift 8s ease infinite;
+}
+
+.clear-night {
+    background: linear-gradient(120deg, #2c3e50 0%, #3498db 100%);
+    animation: gradient-shift 8s ease infinite;
+}
+
+.partly-cloudy-day {
+    background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    animation: gradient-shift 8s ease infinite;
+}
+
+.partly-cloudy-night {
+    background: linear-gradient(120deg, #283E51 0%, #4B79A1 100%);
+    animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.cloudy {
+    background: linear-gradient(120deg, #d4d4d4 0%, #898989 100%);
+    animation: cloudy 4s ease infinite;
+}
+
+@keyframes cloudy {
+    0% { opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+.rainy {
+    background: linear-gradient(120deg, #89f7fe 0%, #4682B4 100%);
+    animation: rainy 1s ease infinite;
+}
+
+@keyframes rainy {
+    0% { background-position: 0px 0px; }
+    100% { background-position: 20px 20px; }
+}
+
+.heavy-rain {
+    background: linear-gradient(120deg, #4682B4 0%, #000046 100%);
+    animation: heavy-rain 0.5s ease infinite;
+}
+
+@keyframes heavy-rain {
+    0% { background-position: 0px 0px; }
+    100% { background-position: 20px 20px; }
+}
+
+.snowy {
+    background: linear-gradient(120deg, #e6e6e6 0%, #ffffff 100%);
+    animation: snowy 5s ease infinite;
+}
+
+@keyframes snowy {
+    0% { background-position: 0px 0px; }
+    100% { background-position: 50px 50px; }
+}
+
+.heavy-snow {
+    background: linear-gradient(120deg, #d4d4d4 0%, #ffffff 100%);
+    animation: heavy-snow 3s ease infinite;
+}
+
+@keyframes heavy-snow {
+    0% { background-position: 0px 0px; }
+    100% { background-position: 50px 50px; }
+}
+
+.foggy {
+    background: linear-gradient(120deg, #b8b8b8 0%, #d4d4d4 100%);
+    animation: foggy 8s ease infinite;
+}
+
+@keyframes foggy {
+    0% { filter: blur(0px); }
+    50% { filter: blur(2px); }
+    100% { filter: blur(0px); }
+}
+
+.thunderstorm {
+    background: linear-gradient(120deg, #292929 0%, #4b4b4b 100%);
+    animation: thunderstorm 4s ease infinite;
+}
+
+@keyframes thunderstorm {
+    0% { filter: brightness(1); }
+    45% { filter: brightness(1); }
+    50% { filter: brightness(2); }
+    55% { filter: brightness(1); }
+    60% { filter: brightness(1); }
+    65% { filter: brightness(1.8); }
+    70% { filter: brightness(1); }
+    100% { filter: brightness(1); }
+}
+
+.unknown {
+    background: linear-gradient(120deg, #bdc3c7 0%, #2c3e50 100%);
+    animation: unknown 5s ease infinite;
+}
+
+@keyframes unknown {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
