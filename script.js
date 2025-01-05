@@ -74,7 +74,10 @@ async function getWeather() {
         
         // Then get the weather data
         const response = await fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=sunrise,sunset&timezone=auto`
+            `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}` +
+            `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code` +
+            `&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset` +
+            `&timezone=auto`
         );
         const data = await response.json();
 
@@ -88,6 +91,9 @@ async function getWeather() {
             const sunset = new Date(data.daily.sunset[0]);
             const isDay = currentDateTime >= sunrise && currentDateTime < sunset;
             displayWeather(data, coords.name, isDay);
+            displayForecast(data.daily);
+            document.querySelector('.forecast-container').classList.remove('hidden');
+            
         } else {
             alert('Error getting weather data. Please try again.');
         }
@@ -181,3 +187,41 @@ function displayWeather(data, cityName, isDay) {
    
     container.classList.add(weatherAnimation);
 } 
+
+function displayForecast(dailyData) {
+    const forecastContainer = document.getElementById('forecast');
+    forecastContainer.innerHTML = ''; 
+
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(dailyData.time[i]);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+        const monthDay = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        const card = document.createElement('div');
+        card.className = 'forecast-card';
+        card.innerHTML = `
+            <div class="date">
+                <div>${dayName}</div>
+                <div>${monthDay}</div>
+            </div>
+            <div class="temp">
+                <div class="temp-range">
+                    <span>${Math.round(dailyData.temperature_2m_max[i])}°</span> /
+                    <span>${Math.round(dailyData.temperature_2m_min[i])}°</span>
+                </div>
+            </div>
+            <div class="weather-description">
+                ${getWeatherDescription(dailyData.weather_code[i])}
+            </div>
+        `;
+
+        const weatherClass = getWeatherAnimation(
+            dailyData.weather_code[i],
+            true 
+        );
+        card.classList.add(weatherClass);
+
+        forecastContainer.appendChild(card);
+    }
+}
+
