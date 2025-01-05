@@ -236,3 +236,91 @@ button:hover {
 .weather-info.hidden {
     display: none;
 }
+
+.forecast-container {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+}
+
+.forecast-cards {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 1rem 0;
+    scroll-behavior: smooth;
+}
+
+.forecast-card {
+    min-width: 120px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.forecast-card .date {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.forecast-card .temp {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.forecast-card .temp-range {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.forecast-card .weather-description {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .forecast-cards {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .forecast-card {
+        min-width: 100px;
+    }
+}
+
+.recent-searches {
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.recent-searches h3 {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.recent-search-item {
+    background: #f0f0f0;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.recent-search-item:hover {
+    background: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+.recent-search-item:active {
+    transform: translateY(0);
+}
