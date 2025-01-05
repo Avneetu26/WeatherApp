@@ -171,8 +171,14 @@ button:hover {
     100% {
         background-position: 0% 100%, 0 100px;  /* Adjusted ending position */
     }
+@keyframes rain {
+    0% {
+        background-position: 0% 0%, 100px 0px;  /* Adjusted starting position */
+    }
+    100% {
+        background-position: 0% 100%, 0 100px;  /* Adjusted ending position */
+    }
 }
-
 .heavy-rain {
     background: linear-gradient(to bottom, #666666ae 0%, #666666ae 100%);
     position: relative;
@@ -348,4 +354,38 @@ button:hover {
     .forecast-card {
         min-width: 100px;
     }
+}
+
+.recent-searches {
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.recent-searches h3 {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.recent-search-item {
+    background: #f0f0f0;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.recent-search-item:hover {
+    background: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+.recent-search-item:active {
+    transform: translateY(0);
 }

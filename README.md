@@ -1,6 +1,6 @@
 # Weather App
 
-A sleek and interactive weather application that provides real-time weather information using the Open-Meteo API. The app features dynamic weather animations that change based on current conditions and time of day, offering users an engaging visual experience. Users can search for any city worldwide to get instant access to temperature, humidity, wind speed, and weather conditions. Built with vanilla JavaScript, CSS animations, and modern HTML5, this project demonstrates clean code architecture while maintaining a responsive and user-friendly interface.
+A sleek and interactive weather application that provides real-time weather information using the Open-Meteo API. The app features dynamic weather animations that change based on current conditions and time of day, offering users an engaging visual experience. Users can search for any city worldwide to get instant access to temperature, humidity, wind speed, forecast and weather conditions. Built with vanilla JavaScript, CSS animations, and modern HTML5, this project demonstrates clean code architecture while maintaining a responsive and user-friendly interface.
 
 # About the api used - Open-Meteo
 
