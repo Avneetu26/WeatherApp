@@ -2,9 +2,44 @@ const cityInput = document.getElementById('city-input');
 const searchBtn = document.getElementById('search-btn');
 
 searchBtn.addEventListener('click', getWeather);
+document.addEventListener('DOMContentLoaded', displayRecentSearches);
 
 const loadingSpinner = document.querySelector('.loading-spinner');
 const weatherInfo = document.querySelector('.weather-info');
+
+const MAX_RECENT_SEARCHES = 5;
+const STORAGE_KEY = 'recentSearches';
+
+function saveToRecentSearches(city) {
+    let recentSearches = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    
+    recentSearches = recentSearches.filter(search => search.toLowerCase() !== city.toLowerCase()); // remove if already exists
+    
+    recentSearches.unshift(city);   
+    recentSearches = recentSearches.slice(0, MAX_RECENT_SEARCHES);
+    
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(recentSearches));
+    displayRecentSearches();
+}
+
+
+function displayRecentSearches() {
+    const searches = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const recentSearchesContainer = document.getElementById('recent-searches');
+    
+    recentSearchesContainer.innerHTML = searches.length ? '<h3>Recent Searches</h3>' : '';
+    
+    searches.forEach(city => {
+        const searchItem = document.createElement('button');
+        searchItem.className = 'recent-search-item';
+        searchItem.textContent = city;
+        searchItem.onclick = () => {
+            cityInput.value = city;
+            getWeather();
+        };
+        recentSearchesContainer.appendChild(searchItem);
+    });
+}
 
 async function getCoordinates(city) {
     try {
@@ -44,6 +79,7 @@ async function getWeather() {
         const data = await response.json();
 
         if (response.ok) {
+            saveToRecentSearches(coords.name);
             const currentTime = new Date().toLocaleString("en-US", {
                 timeZone: data.timezone
             });
