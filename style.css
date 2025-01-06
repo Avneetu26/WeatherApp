@@ -171,13 +171,6 @@ button:hover {
     100% {
         background-position: 0% 100%, 0 100px;  /* Adjusted ending position */
     }
-@keyframes rain {
-    0% {
-        background-position: 0% 0%, 100px 0px;  /* Adjusted starting position */
-    }
-    100% {
-        background-position: 0% 100%, 0 100px;  /* Adjusted ending position */
-    }
 }
 .heavy-rain {
     background: linear-gradient(to bottom, #666666ae 0%, #666666ae 100%);
